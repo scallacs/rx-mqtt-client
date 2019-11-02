@@ -33,7 +33,7 @@
         "start": "rollup -c rollup.config.ts -w",
         "test": "mocha --recursive ./src/**/*.spec.ts",
         "test:integration": "mocha --recursive ./test/integration/**/*.spec.ts ",
-        "test:prod": "tslint --version && tsc --version && npm run lint && nyc --reporter lcov-text npm test -- --no-cache",
+        "test:prod": "tslint --version && tsc --version && npm run lint && nyc --reporter lcov npm test -- --no-cache",
         "deploy-docs": "ts-node tools/gh-pages-publish",
         "report-coverage": "nyc report --reporter=text-lcov | coveralls",
         "commit": "git-cz",
