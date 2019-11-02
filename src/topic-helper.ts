@@ -83,8 +83,8 @@ export function topicMatch(topic: string, pattern: string) {
     const topicArray = topic.split('/')
 
     for (let i = 0; i < filterLength; ++i) {
-        var left = filterArray[i]
-        var right = topicArray[i]
+        let left = filterArray[i]
+        let right = topicArray[i]
         if (left === '#') {
             return topicArray.length >= filterLength - 1;
         }

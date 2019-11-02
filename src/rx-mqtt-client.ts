@@ -133,7 +133,7 @@ export class RxMqttClient {
   public subscribe(topic: string | string[], options: IClientSubscribeOptions = {
     qos: 1
   }): Observable<ISubscriptionGrant[]> {
-    return Observable.create((emitter: Observer<ISubscriptionGrant[]>) => {
+    return new Observable((emitter: Observer<ISubscriptionGrant[]>) => {
       if (!this._client){
         throw RxMqttClient.Errors.internalError('Client is not defined');
       }
@@ -157,7 +157,7 @@ export class RxMqttClient {
   }
 
   public unsubscribe(topic: string | string[], opts?: Object): Observable<Packet | undefined> {
-    return Observable.create((emitter: Observer<Packet | undefined>) => {
+    return new Observable((emitter: Observer<Packet | undefined>) => {
       this._client!
         .unsubscribe(topic, opts, (error?: Error, packet?: Packet) => {
           if (error) {
@@ -175,8 +175,7 @@ export class RxMqttClient {
   }
 
   public publish(topic: string, message: string | Buffer, options: IClientPublishOptions = { qos: 0 }): Observable<void> {
-    return Observable
-      .create((emitter: Observer<void>) => {
+    return new Observable((emitter: Observer<void>) => {
         debug(this._id, `publishing on topic "${topic}"`);
         // if (typeof message !== "string" && !(message instanceof Buffer)){
         //   message = JSON.stringify(message);
