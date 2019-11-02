@@ -1,0 +1,5 @@
+--timeout 15000
+--require ts-node/register 
+--reporter mochawesome 
+--reporter-options reportDir=reports/tests
+--require ./test/bootstrap.ts
