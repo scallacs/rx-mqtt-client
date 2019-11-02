@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { RxMqttClient } from '../../src/rx-mqtt-client';
 import { MQTT_SERVER_URL, startBroker } from '../broker';
-
+import * as uniqid from "uniqid";
 /**
  * RxMqttClient test
  */
@@ -12,9 +12,10 @@ describe("Broker integration test", () => {
 
     let servers: any;
     let client1: RxMqttClient, client2: RxMqttClient, client3: RxMqttClient;
+    let uniqTopicPrefix = uniqid();
 
     before(async function () {
-        this.timeout(3000);
+        // this.timeout(3000);
         client1 = new RxMqttClient();
         client2 = new RxMqttClient();
         client3 = new RxMqttClient();
@@ -56,26 +57,26 @@ describe("Broker integration test", () => {
 
         it("should be able to receive data", function (done) {
             client1.subscribe([
-                '/sensors/+/temperature',
-                '/sensors/+/humidity'
+                uniqTopicPrefix + '/sensors/+/temperature',
+                uniqTopicPrefix + '/sensors/+/humidity'
             ])
                 .subscribe();
 
             client1
-                .stream('/sensors/+/temperature')
+                .stream(uniqTopicPrefix + '/sensors/+/temperature')
                 .pipe(
                     map(msg => mqttMessageToSensorData<TemparatureData>(msg))
                 )
                 .subscribe((data) => {
                     // console.info(`Temperature for ${data.deviceId}: ${data.data.value}°C`);
-                    client1.unsubscribe('/sensors/+/temperature');
+                    client1.unsubscribe(uniqTopicPrefix + '/sensors/+/temperature');
                     expect(data.deviceId).to.be.eql('kitchen');
                     expect(data.data.value).to.be.eq(37.6);
                     done();
                 });
 
             client2
-                .publish('/sensors/kitchen/temperature', JSON.stringify({
+                .publish(uniqTopicPrefix + '/sensors/kitchen/temperature', JSON.stringify({
                     value: 37.6
                 })).toPromise();
 

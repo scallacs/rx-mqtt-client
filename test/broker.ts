@@ -1,6 +1,7 @@
 
-export const MQTT_SERVER_URL = 'tcp://localhost:1883'
-export const WS_SERVER_URL = 'ws://localhost:1884'
+export const MQTT_SERVER_URL = process.env['TEST_BROKER_MQTT'] || 'tcp://localhost:1883'
+export const WS_SERVER_URL = process.env['TEST_BROKER_WEBSOCKET'] || 'ws://localhost:1884'
+
 export function startBroker() {
     const mqttServer = require('mqtt-server');
 
