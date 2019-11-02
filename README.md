@@ -1,5 +1,7 @@
 # Rx MQTT Client
 
+[![Coverage Status](https://coveralls.io/repos/github/scallacs/rx-mqtt-client/badge.svg?branch=master)](https://coveralls.io/github/scallacs/rx-mqtt-client?branch=master)
+
 Reactive extension for MQTT client.
 
 ### Usage
